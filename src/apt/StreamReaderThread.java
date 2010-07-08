@@ -21,7 +21,7 @@ public class StreamReaderThread implements Runnable {
     private JEditorPane commandPane;
     private JProgressBar pbar;
     private UniformIncrementerThread incrementerThread = null;
-    private String commandPaneText=null;
+    private String commandPaneText = null;
     private String outputDirectory;
 
     public StreamReaderThread(JEditorPane pane, JProgressBar bar, InputStream is, String outputDirectory) {
@@ -29,8 +29,8 @@ public class StreamReaderThread implements Runnable {
         commandPane = pane;
         pbar = bar;
         thread = new Thread(this);
-        commandPaneText="";//pane.getText(); //uncomment this for not clearing up the output screen
-        this.outputDirectory=outputDirectory;
+        commandPaneText = "";//pane.getText(); //uncomment this for not clearing up the output screen
+        this.outputDirectory = outputDirectory;
     }
 
     public void start() {
@@ -48,7 +48,7 @@ public class StreamReaderThread implements Runnable {
             String str = "";
             while ((ch = reader.read()) != -1) {
                 System.out.print((char) ch);
-                commandPaneText+=(char)ch;
+                commandPaneText += (char) ch;
                 commandPane.setText(commandPaneText);
 
                 if (str.startsWith("Processing Probesets..") && ch == '.') {
@@ -63,9 +63,9 @@ public class StreamReaderThread implements Runnable {
                 }
             }
 
-            commandPaneText+="Results saved to "+outputDirectory;
+            commandPaneText += "Results saved to " + outputDirectory;
             commandPane.setText(commandPaneText);
-            
+
         } catch (Exception e) {
             System.out.println("Error while reading output from APT");
             e.printStackTrace();
@@ -83,7 +83,6 @@ public class StreamReaderThread implements Runnable {
 //            }
 //        }
     }
-
 
     //sets the 'approximate' progress level as indicated in "ProgressBar-equation.xls" from Nathan
     private void setProgressFor(String str) {
@@ -108,6 +107,20 @@ public class StreamReaderThread implements Runnable {
             pbar.setValue(55);
         } else if (str.contains("Run took approximately")) {
             pbar.setValue(100);
+        } //now for cdf processing
+        else if (str.contains("celfiles.txt")) {
+            pbar.setValue(2);
+        } else if (str.contains("Reading") && str.contains("Done")) {
+            if (str.contains("probesets")) {
+                pbar.setValue(10);
+            } else if (str.contains("and pre-processing")) {
+                pbar.setValue(30);
+            }
+        } else if (str.contains("Computing sketch normalization")) {
+            pbar.setValue(50);
+        } else if (str.contains("Applying sketch normalization to")) {
+            pbar.setValue(70);
         }
+
     }
 }
