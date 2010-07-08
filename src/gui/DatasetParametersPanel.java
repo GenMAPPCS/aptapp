@@ -65,7 +65,7 @@ public class DatasetParametersPanel extends javax.swing.JPanel {
         libraryListModel.removeAllElements();
         downloadCheckBox.setSelected(false);
         downloadCheckBox.setEnabled(false);
-        
+
         int selectedIndex = arrayCombobox.getSelectedIndex();
         if (selectedIndex == -1) {
             return;
@@ -156,13 +156,22 @@ public class DatasetParametersPanel extends javax.swing.JPanel {
             arrayDownloader.download(arrayFileURL);
             arrayDownloader.waitFor();
             File arrayFile = arrayDownloader.getOutputFile();
-            if (arrayFile == null) {
-                JOptionPane.showMessageDialog(this, "Error downloading array file from internet. Please make sure you are connected to internet.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+
+            if (arrayFile != null) {    //successfully downloaded arrayFile
+                File temp=new File("res/ArrayFileInfo.txt");
+                boolean res = arrayFile.renameTo(temp);
+                arrayFile=temp;
+                System.out.println("Replace status of old res/ArrayFileInfo.txt :" + res);
             } else {
-                arrayDataList = parseArrayFile(arrayFile);
-                System.out.println("delete status of array file is" + arrayFile.delete());
+                JOptionPane.showMessageDialog(this, "Error downloading array file from internet. Please make sure you are connected to internet. Using the locally cached copy now.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+
+                arrayFile = new File("res/ArrayFileInfo.txt");
+//            } else {
             }
+            arrayDataList = parseArrayFile(arrayFile);
+//                System.out.println("delete status of array file is" + arrayFile.delete());
+
             Collections.sort(arrayDataList);
 
             //downloading species file from internet
@@ -170,13 +179,22 @@ public class DatasetParametersPanel extends javax.swing.JPanel {
             speciesDownloader.download(speciesFileURL);
             speciesDownloader.waitFor();
             File speciesFile = speciesDownloader.getOutputFile();
-            if (speciesFile == null) {
-                JOptionPane.showMessageDialog(this, "Error downloading species file from internet. Please make sure you are connected to internet.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+            if (speciesFile != null) // successfully downloaded the species file
+            {
+                File temp=new File("res/species_all.txt");
+                boolean res = speciesFile.renameTo(temp);
+                speciesFile=temp;
+                System.out.println("Replace status of old res/species_all.txt :" + res);
+
             } else {
-                speciesList = parseSpeciesFile(speciesFile);
-                System.out.println("delete status of species file is" + speciesFile.delete());
+                JOptionPane.showMessageDialog(this, "Error downloading species file from internet. Please make sure you are connected to internet. Using the locally cached copy now.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                speciesFile = new File("res/species_all.txt");
             }
+//            } else {
+            speciesList = parseSpeciesFile(speciesFile);
+//                System.out.println("delete status of species file is" + speciesFile.delete());
+
 
             fillComboBoxes();
 
