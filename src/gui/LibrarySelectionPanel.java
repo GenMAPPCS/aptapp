@@ -12,18 +12,14 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * Screen1Panel.java
  *
  * Created on 5 Jun, 2010, 8:20:19 PM
  */
 /**
  *
- * @author user
+ * Responsible for presenting the user with components to locate various library files needed for processing of CEL files
+ * @author Anurag Sharma
  */
 public class LibrarySelectionPanel extends javax.swing.JPanel {
 
@@ -42,54 +38,106 @@ public class LibrarySelectionPanel extends javax.swing.JPanel {
         customInit();
     }
 
+    /**
+     *
+     * @return true if CDF option is selected
+     */
     public boolean isCDFSelected() {
         return cdfChecker.isSelected();
     }
 
+    /**
+     *
+     * @return true if PGF option is selected
+     */
     public boolean isPgfSelected() {
         return pgfChecker.isSelected();
     }
 
+    /**
+     *
+     * @return true if CLF option is selected
+     */
     public boolean isClfSelected() {
         return clfChecker.isSelected();
     }
 
+    /**
+     *
+     * @return true if BGP option is selected
+     */
     public boolean isBgpSelected() {
         return bgpChecker.isSelected();
     }
 
+    /**
+     *
+     * @return true if QCC option is selected
+     */
     public boolean isQccSelected() {
         return qccChecker.isSelected();
     }
 
+    /**
+     *
+     * @return true if PS option is selected
+     */
     public boolean isPsSelected() {
         return psChecker.isSelected();
     }
 
+    /**
+     *
+     * @return the selected CDF library file
+     */
     public File getCdfLibraryFile() {
         return selectedCDFFile;
     }
 
+    /**
+     *
+     * @return the selected PGF file
+     */
     public File getPgfLibraryFile() {
         return selectedFile[0];
     }
 
+    /**
+     *
+     * @return the selected CLF file
+     */
     public File getClfLibraryFile() {
         return selectedFile[1];
     }
 
+    /**
+     *
+     * @return the selected BGP file
+     */
     public File getBgpLibraryFile() {
         return selectedFile[2];
     }
 
+    /**
+     *
+     * @return the selected QCC file
+     */
     public File getQccLibraryFile() {
         return selectedFile[3];
     }
 
+    /**
+     *
+     * @return the PS library file
+     */
     public File getPsLibraryFile() {
         return selectedFile[4];
     }
 
+    /**
+     * disables all library options other than CDF
+     * @param cdfFileName the list having a single entry of the CDF file name
+     */
     public void selectCDFOption(ArrayList<String> cdfFileName) {
         //enable CDF
         cdfLabel.setEnabled(true);
@@ -139,6 +187,10 @@ public class LibrarySelectionPanel extends javax.swing.JPanel {
 
     }
 
+    /**
+     * enables all library options and disables only CDF library option
+     * @param lib the list of names of the library files (pgf, clf, bgp ...)
+     */
     public void selectPGFOption(ArrayList<String> lib) {
         File[] files = new File(localDatabaseDir.getAbsolutePath()).listFiles();
         System.out.println("searching files:" + lib);
@@ -227,6 +279,10 @@ public class LibrarySelectionPanel extends javax.swing.JPanel {
 //        return list;
 //    }
 
+    /**
+     *
+     * @return the list of the algorithms selected (rma-sketch and dabg)
+     */
     public ArrayList<String> getAlgorithms() {
         ArrayList<String> list = new ArrayList<String>();
         if (jCheckBox1.isSelected()) {
@@ -239,6 +295,9 @@ public class LibrarySelectionPanel extends javax.swing.JPanel {
         return list;
     }
 
+    /**
+     * performs initialization process
+     */
     void customInit() {
         comboList[0] = jComboBox1;
         comboList[1] = jComboBox2;
@@ -263,6 +322,12 @@ public class LibrarySelectionPanel extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Creates a File chooser with specific filters and file description and returns
+     * @param suffix the suffix of the files to filter
+     * @param description the file description
+     * @return the File chooser with filter for suffix and description set
+     */
     JFileChooser getChooser(final String suffix, final String description) {
 
         JFileChooser chooser = new JFileChooser(defaultDirectory);
@@ -698,6 +763,9 @@ public class LibrarySelectionPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * presents user for selecting the Directory
+     */
     public void defaultDirAction() {
         //select folder
         JFileChooser chooser = new JFileChooser(new File("."));
@@ -964,6 +1032,11 @@ public class LibrarySelectionPanel extends javax.swing.JPanel {
     private javax.swing.JButton qccSelectorButton;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * scans the local database directory or the one selected by the user and automatically locates the library files
+     * @param dir the selected dir.
+     * @param skipIndex (unused for now)
+     */
     public void setDefaultValues(File dir, int skipIndex) {
         System.out.println("scanning array");
         //scan the contents of directory and appropriately fill the other fields
@@ -1012,6 +1085,10 @@ public class LibrarySelectionPanel extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * independently tests the class
+     * @param args
+     */
     public static void main(String[] args) {
         JFrame f = new JFrame();
         f.setSize(500, 500);

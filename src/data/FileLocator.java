@@ -1,12 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package data;
 
 /**
- *
- * @author Anurag Sharma, the user
+ * Stores the location of various configuration files needed by the program
+ * @author Anurag Sharma
  */
 public class FileLocator {
 

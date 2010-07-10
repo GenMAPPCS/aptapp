@@ -1,9 +1,5 @@
 package downloader;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 //package downloader;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -17,13 +13,12 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 /**
- *
- * @author Anurag Sharma, the user
+ * Downloads any URL supplied from internet
+ * @author Anurag Sharma
  */
 public class Downloader implements DownloadListener {
 
@@ -40,6 +35,12 @@ public class Downloader implements DownloadListener {
     public Downloader() {
     }
 
+    /**
+     * downloads the URL supplied
+     * @param urlName the URL to download
+     * @throws MalformedURLException
+     * @throws IOException
+     */
     public void download(String urlName) throws MalformedURLException, IOException {
 //        JOptionPane.showMessageDialog(null, "This program is trying to download a file from internet.","Information",
 //                JOptionPane.INFORMATION_MESSAGE);
@@ -107,10 +108,18 @@ public class Downloader implements DownloadListener {
 
     }
 
+    /**
+     * adds a listener to be notified when the download is finished
+     * @param listener the listener to be notified
+     */
     public void addDownloadListener(DownloadListener listener) {
         task.addDownloadListener(listener);
     }
 
+    /**
+     * Called when download is finished. Performs joining operation of the various file segments which are downloaded
+     * @param evt
+     */
     public synchronized void onDownloadFinish(DownloadEvent evt) {
         if (evt.status == Status.FAILED) {
             //handle it here
@@ -190,6 +199,9 @@ public class Downloader implements DownloadListener {
 
     }
 
+    /**
+     * Waits for the download to finish. Checks the status every 300ms.
+     */
     public void waitFor() {
         while (downloadStatus != Status.FINISHED) {
             try {
@@ -199,6 +211,10 @@ public class Downloader implements DownloadListener {
         }
     }
 
+    /**
+     *
+     * @return the downloaded file.
+     */
     public File getOutputFile() {
         if (exitStatus == Status.FAILED) {
             System.out.println("exit status found Failed. returning null");
@@ -208,9 +224,14 @@ public class Downloader implements DownloadListener {
         return outputFile;
     }
 
+    /**
+     *
+     * @return the progress of download
+     */
     public int getProgress() {
         return task.getProgress();
     }
+
 
     private String generateID() {
         String ID = String.valueOf((int) (Math.random() * 10000));
@@ -349,6 +370,10 @@ public class Downloader implements DownloadListener {
         f.setVisible(true);
     }
 
+    /**
+     * shows the progress in the supplied progress bar
+     * @param jProgressBar1 the progress bar where the progress is intended to be shown
+     */
     public void showProgressIn(JProgressBar jProgressBar1) {
         this.pbar = jProgressBar1;
         new Thread() {

@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package extractor;
 
 import java.io.BufferedInputStream;
@@ -12,11 +9,17 @@ import java.io.FileOutputStream;
 import java.util.zip.GZIPInputStream;
 
 /**
- *
- * @author Anurag Sharma, the user
+ * GZIP compressed file extraction utility class
+ * @author Anurag Sharma
  */
 public class GZIPExtractor {
 
+    /**
+     * extracts a compressed file with GZIP algorithm
+     * @param gzippedFile the compressed file
+     * @param outputDir the location of the directory where the uncompressed file is to be placed
+     * @return the uncompressed file
+     */
     public static File extract(File gzippedFile, String outputDir) {
         File outputFile = null;
         try {

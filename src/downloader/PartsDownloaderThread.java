@@ -8,13 +8,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
- *
- * @author Anurag Sharma, the user
+ * Represents the downloader thread which run parallely and download segments of a file
+ * @author Anurag Sharma
  */
 public class PartsDownloaderThread implements Runnable {
 
@@ -26,6 +22,14 @@ public class PartsDownloaderThread implements Runnable {
     private static final int MAX_RETRY = 5;
     private int retryCounter = 0;
 
+    /**
+     * Initiates downloading of specified file segment
+     * @param start the start byte of the file segment
+     * @param end the end byte of the file segment
+     * @param num the index of the current file segment
+     * @param dt the DownloaderTask which contains information about the current download
+     * @throws IOException
+     */
     public PartsDownloaderThread(int start, int end, int num, DownloaderTask dt) throws IOException {
         startByte = start;
         endByte = end;
@@ -33,11 +37,17 @@ public class PartsDownloaderThread implements Runnable {
         task = dt;
     }
 
+    /**
+     * starts downloading the specified file segment
+     */
     public void start() {
         Thread t = new Thread(this);
         t.start();
     }
 
+    /**
+     * Actual downloading code is kept here.
+     */
     public synchronized void run() {
         boolean finished = false;
         Status status = Status.SUCCESS; // status = 0 means successfully downloaded , 1- Failed

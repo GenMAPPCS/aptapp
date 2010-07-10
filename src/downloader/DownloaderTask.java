@@ -2,15 +2,11 @@ package downloader;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 /**
- *
- * @author Anurag Sharma, the user
+ * Keeps the data related to one download
+ * @author Anurag Sharma
  */
 public class DownloaderTask {
 
@@ -32,22 +28,43 @@ public class DownloaderTask {
         fileSize = size;
     }
 
+    /**
+     *
+     * @return the URL being downloaded
+     */
     public URL getURL() {
         return urlName;
     }
 
+    /**
+     *
+     * @return the unique ID for current task
+     */
     public String getID() {
         return identifier;
     }
 
+    /**
+     *
+     * @return the number of threads still actively downloading
+     */
     public int getActiveThreadCount() {
         return count;
     }
 
+    /**
+     * called when a download thread gets started
+     * @param partNumber the index of the downloader thread
+     */
     public void notifyStarted(int partNumber) {
         startedThreadCount++;
     }
 
+    /**
+     * called when a downloader thread gets finished
+     * @param partNumber the index of the thread
+     * @param status the exit status of the thread
+     */
     public void notifyFinished(int partNumber, Status status) {
         finishedThreadCount++;
         if(status==Status.FAILED)
@@ -58,6 +75,10 @@ public class DownloaderTask {
         }
     }
 
+    /**
+     * adds the listener to be called when the download is finished
+     * @param listener the listener to be called
+     */
     public void addDownloadListener(DownloadListener listener) {
         listenerList.add(listener);
     }
@@ -74,16 +95,28 @@ public class DownloaderTask {
         }
     }
 
+    /**
+     * adds the supplied amount to the existing progress
+     * @param count the amount to add
+     */
     public void addToProgress(int count) {
         downloadedAmount += count;
 //        System.out.println("+"+downloadedAmount+"="+(int)(100*((float)downloadedAmount)/fileSize));
 //        System.out.println("now progress="+getProgress()+"%");
     }
 
+    /**
+     *
+     * @return the current progress for this download
+     */
     public int getProgress() {
         return (int) (100 * ((float) downloadedAmount) / fileSize);
     }
 
+    /**
+     * reduces the progress by the supplied amount
+     * @param counter the amount by which progress is intended to be reduced.
+     */
     public void removeFromProgress(int counter) {
         downloadedAmount -= counter;
     }

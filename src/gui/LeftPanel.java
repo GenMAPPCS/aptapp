@@ -9,8 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- *
- * @author Anurag Sharma, the user
+ * Shows the list of titles of the screens which are available to be filled
+ * @author Anurag Sharma
  */
 public class LeftPanel extends JPanel {
 
@@ -19,6 +19,10 @@ public class LeftPanel extends JPanel {
     private JLabel[] labelList;
     private int highlightedIndex = 0;
 
+    /**
+     * Performs initialization
+     * @param listOfElements the list of strings which it displays
+     */
     public LeftPanel(ArrayList<String> listOfElements) {
         setBackground(backgroundColor);
         setForeground(foregroundColor);
@@ -32,16 +36,11 @@ public class LeftPanel extends JPanel {
         }
 
         setBorder(BorderFactory.createLoweredBevelBorder());
-
-        //following was for testing only
-//        this.addMouseListener(new MouseAdapter() {
-//
-//            public void mousePressed(MouseEvent e) {
-//                 highlightNext();
-//            }
-//        });
     }
 
+    /**
+     * adds labels to the list
+     */
     public void addLabels() {
         for (JLabel label : labelList) {
             label.setBackground(foregroundColor);
@@ -50,6 +49,10 @@ public class LeftPanel extends JPanel {
         }
     }
 
+    /**
+     * highlights an element of the list
+     * @param index the index of the element to hightlight
+     */
     public void highlight(int index) {
         for (int i = 0; i < labelList.length; i++) {
             if (i == index) {
@@ -64,16 +67,26 @@ public class LeftPanel extends JPanel {
         repaint();
     }
 
+    /**
+     * highlights the next element in the list with wrap around
+     */
     public void highlightNext() {
         highlightedIndex = (highlightedIndex + 1) % labelList.length;
         highlight(highlightedIndex);
     }
 
+    /**
+     * highlights the previous element in the list with wrap around
+     */
     public void highlightPrevious() {
         highlightedIndex = (highlightedIndex + labelList.length - 1) % labelList.length;
         highlight(highlightedIndex);
     }
 
+    /**
+     * independently tests this class
+     * @param args
+     */
     public static void main(String[] args) {
         JFrame f = new JFrame();
         f.setSize(500, 500);

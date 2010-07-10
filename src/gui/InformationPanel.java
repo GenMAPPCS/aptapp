@@ -5,18 +5,13 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * InformationPanel.java
  *
  * Created on 6 Jun, 2010, 1:02:02 AM
  */
 /**
- *
- * @author user
+ * This is responsible for displaying the information which user has selected in various screens
+ * @author Anurag Sharma
  */
 public class InformationPanel extends javax.swing.JPanel {
 
@@ -33,7 +28,10 @@ public class InformationPanel extends javax.swing.JPanel {
 //        fillInformation();
     }
 
-    //returns 0-success and 1-failure
+    /**
+     * Retrieves information filled by the user and populates in various fields
+     * @return the exit status (0-success and 1-failure)
+     */
     int fillInformation() {
         ArrayList<File> celFiles = celPanel.getCELFileList();
 //        ArrayList<File> libFiles = screen2Panel.getLibraryFiles();
