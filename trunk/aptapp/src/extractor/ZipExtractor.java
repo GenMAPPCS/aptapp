@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package extractor;
 
 import java.io.BufferedInputStream;
@@ -9,15 +5,20 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipInputStream;
 
 /**
- *
- * @author Anurag Sharma, the user
+ * ZIP compressed file extraction utility class
+ * @author Anurag Sharma
  */
 public class ZipExtractor {
 
+    /**
+     * extracts the ZIP compressed file
+     * @param gzippedFile the ZIP compressed file
+     * @param outputDir the directory where the uncompressed file is to be placed
+     * @return the uncompressed file
+     */
     public static File extract(File gzippedFile, String outputDir) {
         File outputFile = null;
         try {

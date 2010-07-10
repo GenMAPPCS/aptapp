@@ -13,18 +13,14 @@ import javax.swing.ListSelectionModel;
 import javax.swing.filechooser.FileFilter;
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * CELSelectionPanel.java
  *
  * Created on 5 Jun, 2010, 11:47:19 PM
  */
+
 /**
- *
- * @author user
+ * Panel for selecting the CEL files
+ * @author Anurag Sharma
  */
 public class CELSelectionPanel extends javax.swing.JPanel {
 
@@ -37,13 +33,20 @@ public class CELSelectionPanel extends javax.swing.JPanel {
         customInit();
     }
 
-    void customInit() {
+    /**
+     * performs initialization of various components
+     */
+    private void customInit() {
         listModel = new DefaultListModel();
         jList1.setModel(listModel);
         jList1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 //        jList1.setCellRenderer(new CELListCellRenderer());
     }
 
+    /**
+     *
+     * @return the selected CEL files list
+     */
     public ArrayList<File> getCELFileList() {
         return celFileList;
     }
@@ -127,6 +130,10 @@ public class CELSelectionPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * adds the CEL files to the list
+     * @param evt
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         ConfigurationReader conf = null;
         try {
@@ -174,6 +181,11 @@ public class CELSelectionPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
+
+    /**
+     * removes the selected CEL file from list
+     * @param evt
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         int ind[] = jList1.getSelectedIndices();
@@ -191,6 +203,10 @@ public class CELSelectionPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * to test this class independently
+     * @param args
+     */
     public static void main(String[] args) {
         JFrame f = new JFrame();
         f.setSize(300, 300);

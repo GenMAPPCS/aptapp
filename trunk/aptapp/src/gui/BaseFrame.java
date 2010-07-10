@@ -1,11 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * BaseFrame.java
- *
  * Created on 4 Jun, 2010, 5:55:55 PM
  */
 package gui;
@@ -31,7 +25,9 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author user
+ * @author Anurag Sharma
+ * This is the main GUI class which contains the base GUI to host various
+ * other components. This represents the main window of the program.
  */
 public class BaseFrame extends javax.swing.JFrame {
 
@@ -48,17 +44,11 @@ public class BaseFrame extends javax.swing.JFrame {
     private File outputDirectory = null;
     private SplashScreenFrame splashFrame;
 
-    /** Creates new form BaseFrame */
+    /** Creates new form BaseFrame provided with proper objects of LibrarySelectionPanel and DatasetParametersPanel class*/
     public BaseFrame(LibrarySelectionPanel lsp, DatasetParametersPanel dpp) {
         super();
-//        splashFrame=new SplashScreenFrame();
-//
-//        new Thread(){
-//            public void run(){
-//                splashFrame.setVisible(true);
-//            }
-//        }.start();
 
+        //try following commented code to change the Look and Feel as per the underlying operating system
 //        try {
 //            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 //        } catch (ClassNotFoundException ex) {
@@ -73,14 +63,19 @@ public class BaseFrame extends javax.swing.JFrame {
 
         initComponents();
 
-        customInit(lsp, dpp);   //added by Anurag Sharma
+        customInit(lsp, dpp);
 
-//        splashFrame.setVisible(false);
-//        splashFrame.dispose();
     }
 
-    void customInit(LibrarySelectionPanel lsp, DatasetParametersPanel dpp) {
+    /**
+     * This functions does the initialization for various components to be used
+     * @param libraryPanel object of LibrarySelectionPanel class
+     * @param datasetPanel object of DatasetParametersPanel class
+     */
+    private void customInit(LibrarySelectionPanel libraryPanel, DatasetParametersPanel datasetPanel) {
         jProgressBar1.setVisible(false);
+
+        //adding contents of the left panel
         ArrayList<String> list = new ArrayList<String>();
         list.add("      Introduction");
         list.add("      Dataset Parameters");
@@ -99,12 +94,12 @@ public class BaseFrame extends javax.swing.JFrame {
         leftPanelParent.add(panel, BorderLayout.CENTER);
 
 
-        introPanel = new IntroductionPanel();
-        celPanel = new CELSelectionPanel();
-        librarySelectionPanel = lsp;
-        informationPanel = new InformationPanel(celPanel, librarySelectionPanel);
-        commandOutputPanel = new CommandOutputPanel();
-        datasetPanel = dpp;
+        this.introPanel = new IntroductionPanel();
+        this.celPanel = new CELSelectionPanel();
+        this.librarySelectionPanel = libraryPanel;
+        this.informationPanel = new InformationPanel(celPanel, libraryPanel);
+        this.commandOutputPanel = new CommandOutputPanel();
+        this.datasetPanel = datasetPanel;
 
         ///////////////////main Panel//////////////
         RoundPanel rp1 = new RoundPanel();
@@ -113,12 +108,11 @@ public class BaseFrame extends javax.swing.JFrame {
         RoundPanel rp2 = new RoundPanel();
         rp2.add(datasetPanel);
 
-//        rp1.add(new JButton("p1"));
         RoundPanel rp3 = new RoundPanel();
         rp3.add(celPanel);
 
         RoundPanel rp4 = new RoundPanel();
-        rp4.add(librarySelectionPanel);
+        rp4.add(libraryPanel);
 
         RoundPanel rp5 = new RoundPanel();
         rp5.add(informationPanel);
@@ -138,6 +132,11 @@ public class BaseFrame extends javax.swing.JFrame {
         System.out.println("showing " + "p" + currentScreen);
     }
 
+    /**
+     * Adds the flags to the apt-probeset-summarize command.
+     * TODO: move this function to other APT related utility class in package apt
+     * @param commandList the list of commands to be added to the apt-probeset-summarize command
+     */
     private void addLibraryFlags(ArrayList<String> commandList) {
         if (librarySelectionPanel.isCDFSelected()) {
             commandList.add("-d");
@@ -167,6 +166,13 @@ public class BaseFrame extends javax.swing.JFrame {
         }
     }
 
+
+    /**
+     * adds to the existing command for apt-probeset-summarize, the -o, --cel-files and -a switches
+     * @param commandList the existing parameter list of the command apt-probeset-summarize
+     * @param algos the algorithm to be used
+     * @return returns whether this function was able to execute successfully without errors or not
+     */
     private boolean addOtherFlags(ArrayList<String> commandList, ArrayList<String> algos) {
         commandList.add("-o");
 //        commandList.add("output-gene");
@@ -182,7 +188,7 @@ public class BaseFrame extends javax.swing.JFrame {
             }
             commandList.add(tempOutputDir.getAbsolutePath());
             outputDirectory = tempOutputDir;
- 
+
         } else {
             commandList.add(datasetPanel.getOutputDirectoryFile().getAbsolutePath());
             outputDirectory = datasetPanel.getOutputDirectoryFile();
@@ -201,6 +207,12 @@ public class BaseFrame extends javax.swing.JFrame {
         return true;
     }
 
+
+    /**
+     * Performs some post analysis steps like:
+     * moving rma-sketch.summary.txt to its respective location by proper name
+     * moving dabg.summary.txt to its respective location by proper name
+     */
     private void postAnalysisSteps() {
         if (!datasetPanel.isDatasetNameGiven()) {
             return;
@@ -318,6 +330,10 @@ public class BaseFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Calls various functions on the press of 'next' button in different screens
+     * @param evt the ActionEvent object which is automatically passed by system
+     */
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
         if (currentScreen == 2) {   //dataset Panel screen
 
@@ -559,6 +575,10 @@ public class BaseFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_nextButtonActionPerformed
 
+    /***
+     * Moves to previous screen visible.
+     * @param evt passed by system automatically
+     */
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
 
         if (currentScreen == 6) {
@@ -596,6 +616,10 @@ public class BaseFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_backButtonActionPerformed
 
+    /**
+     * Exits the program after confirming from the user and aborts the running command if necessary
+     * @param evt
+     */
     private void quitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitButtonActionPerformed
 
         if (aptProcess != null && aptProcessRunning) {
@@ -619,6 +643,7 @@ public class BaseFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_quitButtonActionPerformed
 
     /**
+     * The main starting point for this program. Passes the control to SplashScreenFrame.
      * @param args the command line arguments
      */
     public static void main(String args[]) {

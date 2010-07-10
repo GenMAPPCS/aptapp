@@ -1,13 +1,8 @@
 package downloader;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- *
- * @author user
+ * a listener interface
+ * @author Anurag Sharma
  */
 public interface DownloadListener {
     public void onDownloadFinish(DownloadEvent evt);

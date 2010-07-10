@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /*
  * SplashScreenFrame.java
@@ -14,8 +10,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 /**
- *
- * @author user
+ * Displays the splash scren at the start of the progam
+ * @author Anurag Sharma
  */
 public class SplashScreenFrame extends javax.swing.JFrame {
 
@@ -28,6 +24,9 @@ public class SplashScreenFrame extends javax.swing.JFrame {
         customInit();
     }
 
+    /**
+     * performs initialization of location of the splash screen
+     */
     void customInit() {
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
         int w = this.getWidth(), h = this.getHeight();
@@ -98,6 +97,7 @@ public class SplashScreenFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
+     * tests the class independently
      * @param args the command line arguments
      */
     public static void main(String args[]) {

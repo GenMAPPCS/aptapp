@@ -7,32 +7,41 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 /**
- *
+ * Custom JPanel with rounded corners
  * @author Anurag Sharma, the user
  */
 public class RoundPanel extends JPanel {
 
     private JPanel insidePanel;
 
+    /**
+     * creates new object
+     */
     public RoundPanel() {
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     }
 
+    /**
+     *
+     * @param insidePanel sets insidePanel within the current rounded panel
+     */
     public RoundPanel(JPanel insidePanel) {
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         setInsidePanel(insidePanel);
     }
 
+    /**
+     *
+     * @param p the panel to put within this rounded panel
+     */
     public void setInsidePanel(JPanel p) {
         insidePanel = p;
         this.add(p, BorderLayout.CENTER);
     }
 
+    @Override
     protected void paintComponent(Graphics g) {
         int width = getWidth();
         int height = getHeight();
@@ -42,9 +51,13 @@ public class RoundPanel extends JPanel {
 
     }
 
+    /**
+     * independently tests the class
+     * @param args
+     */
     public static void main(String[] args) {
         JFrame f = new JFrame();
-        f.setDefaultCloseOperation(f.EXIT_ON_CLOSE);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize(500, 500);
         RoundPanel panel = new RoundPanel();
 

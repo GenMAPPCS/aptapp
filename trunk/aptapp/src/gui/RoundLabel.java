@@ -3,9 +3,12 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
+/**
+ * Custom JLabel with rounded corners
+ * @author Anurag Sharma
+ */
 class RoundLabel extends JLabel {
 
     public RoundLabel(String name) {
@@ -16,6 +19,7 @@ class RoundLabel extends JLabel {
         setForeground(Color.blue);
     }
 
+    @Override
     protected void paintComponent(Graphics g) {
         int width = getWidth();
         int height = getHeight();

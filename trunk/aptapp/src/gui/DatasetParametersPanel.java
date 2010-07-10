@@ -1,9 +1,4 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * DatasetParametersPanel.java
  *
  * Created on Jun 16, 2010, 12:09:43 PM
@@ -30,8 +25,8 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
 /**
- *
- * @author user
+ * shows window to select species, array etc.
+ * @author Anurag Sharma
  */
 public class DatasetParametersPanel extends javax.swing.JPanel {
 
@@ -53,14 +48,26 @@ public class DatasetParametersPanel extends javax.swing.JPanel {
         librarySelectionPanel = panel;
     }
 
+    /**
+     *
+     * @return the list of names of the library files needed
+     */
     public ArrayList<String> getNeededLibraryFiles() {
         return neededLibraryFiles;
     }
 
+    /**
+     *
+     * @return the Array data selected
+     */
     public ArrayData getSelectedArrayData() {
         return selectedArrayData;
     }
 
+
+    /**
+     * tries to locate the library files for the species and array selected by the user locally
+     */
     public void arrayComboAction() {
         libraryListModel.removeAllElements();
         downloadCheckBox.setSelected(false);
@@ -139,6 +146,9 @@ public class DatasetParametersPanel extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * performs initialization of the components
+     */
     private void customInit() {
         try {
 
@@ -206,6 +216,10 @@ public class DatasetParametersPanel extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * validates the current form.
+     * @return true if the dataset name is filled
+     */
     public boolean validateForm() {
         if (datasetName.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Please enter the Dataset name to proceed further",
@@ -215,26 +229,49 @@ public class DatasetParametersPanel extends javax.swing.JPanel {
         return true;
     }
 
+    /**
+     *
+     * @return the list of names of library files which are not located in LocalDatabase and needs to be downloaded
+     */
     public ArrayList<String> getDownloadList() {
         return downloadList;
     }
 
+    /**
+     *
+     * @return the output directory for the apt-probeset-summarize
+     */
     public File getOutputDirectoryFile() {
         return outputDirectoryFile;
     }
 
+    /**
+     *
+     * @return true if the dataset name is provided by the user
+     */
     public boolean isDatasetNameGiven() {
         return !datasetName.getText().equals("");
     }
 
+    /**
+     *
+     * @return true if the download option is selected
+     */
     public boolean isDownloadSelected() {
         return downloadCheckBox.isSelected();
     }
 
+    /**
+     *
+     * @return the name of the dataset provided
+     */
     public String getDatasetName() {
         return datasetName.getText();
     }
 
+    /**
+     * populates the array list based on the
+     */
     private void fillComboBoxes() {
         //populating the comboboxes
         if (speciesList != null) {
@@ -402,6 +439,10 @@ public class DatasetParametersPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * provides the selection dialog for the output directory
+     * @param evt passed by system
+     */
     private void outputDirSelectionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputDirSelectionButtonActionPerformed
         JFileChooser chooser = new JFileChooser(new File("."));
         chooser.setFileFilter(new FileFilter() {
@@ -430,6 +471,10 @@ public class DatasetParametersPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_outputDirSelectionButtonActionPerformed
 
+    /**
+     * does the same thing as clocking the directory selection button
+     * @param evt
+     */
     private void outputDirTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outputDirTextFieldMouseClicked
 
         outputDirSelectionButtonActionPerformed(null);
@@ -484,6 +529,11 @@ public class DatasetParametersPanel extends javax.swing.JPanel {
         return true;
     }
 
+    /**
+     * parses the ArrayFileInfo.txt downloaded from internet
+     * @param arrayFile the ArrayFileInfo.txt file
+     * @return the list of Array data parsed from the file
+     */
     private ArrayList<ArrayData> parseArrayFile(File arrayFile) {
         ArrayList<ArrayData> list = null;
         try {
@@ -515,6 +565,12 @@ public class DatasetParametersPanel extends javax.swing.JPanel {
         return list;
     }
 
+
+    /**
+     * parses the species_all.txt downloaded from internet
+     * @param arrayFile the species_all.txt file
+     * @return the list of species data parsed from the file
+     */
     private ArrayList<Species> parseSpeciesFile(File speciesFile) {
         ArrayList<Species> list = null;
         try {

@@ -1,16 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package apt;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JProgressBar;
 
 /**
- *
- * @author Anurag Sharma, the user
+ * Uniformly increments the Progress Bar. It is required in some steps.
+ * @author Anurag Sharma
  */
 public class UniformIncrementerThread implements Runnable {
 
@@ -19,6 +13,12 @@ public class UniformIncrementerThread implements Runnable {
     private int count;
     private boolean running=false;
 
+    /**
+     * creates new object
+     * @param bar the Progress bar where the progress is to be displayed
+     * @param interval the interval at which the bar is to be updated
+     * @param count the number of times the progress is to be increased by 1
+     */
     public UniformIncrementerThread(JProgressBar bar, int interval, int count) {
         pbar = bar;
         this.interval = interval;

@@ -1,12 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package downloader;
 
 /**
- *
- * @author user
+ * Represents various status of downloading phase
+ * @author Anurag Sharma
  */
 public enum Status {
     FINISHED,

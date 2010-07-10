@@ -1,6 +1,3 @@
-/*
- * this is the class to download a series of links
- */
 package downloader;
 
 import java.awt.event.ActionListener;
@@ -13,14 +10,19 @@ import java.util.logging.Logger;
 import javax.swing.JProgressBar;
 
 /**
- *
- * @author Anurag Sharma, the user
+ * this is the class to download a series of links provided
+ * @author Anurag Sharma
  */
 public class SequenceDownloader {
 
     private ArrayList<ActionListener> listenerList = new ArrayList<ActionListener>();
 
-    //returns NULL in case of Failure
+    /**
+     * downloads the series of links provided to it as a list
+     * @param urlList the list of URLs to download
+     * @param pbar the progress bar where the download progress is intended to be reflected
+     * @return the list of files actually downloaded
+     */
     public ArrayList<File> downloadList(ArrayList<String> urlList, final JProgressBar pbar) {
         ArrayList<File> downloadedFiles = new ArrayList<File>();
 
@@ -73,6 +75,10 @@ public class SequenceDownloader {
         }
     }
 
+    /**
+     * Adds the listner which is called when the download is finished
+     * @param lis the listener
+     */
     public void addActionListener(ActionListener lis) {
         listenerList.add(lis);
     }

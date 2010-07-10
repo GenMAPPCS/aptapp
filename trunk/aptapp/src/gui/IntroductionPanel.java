@@ -5,18 +5,13 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * IntroductionPanel.java
  *
  * Created on 5 Jun, 2010, 11:30:41 PM
  */
 /**
- *
- * @author user
+ * This class is responsible for displaying the GPL license
+ * @author Anurag Sharma
  */
 public class IntroductionPanel extends javax.swing.JPanel {
 
@@ -26,6 +21,9 @@ public class IntroductionPanel extends javax.swing.JPanel {
         customInit();
     }
 
+    /**
+     * Loads the GPL text from file and displays it
+     */
     void customInit() {
         try {
             Scanner sc = new Scanner(new File("res/gpl-2.0.txt"));
