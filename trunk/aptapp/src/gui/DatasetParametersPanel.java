@@ -64,7 +64,6 @@ public class DatasetParametersPanel extends javax.swing.JPanel {
         return selectedArrayData;
     }
 
-
     /**
      * tries to locate the library files for the species and array selected by the user locally
      */
@@ -168,9 +167,9 @@ public class DatasetParametersPanel extends javax.swing.JPanel {
             File arrayFile = arrayDownloader.getOutputFile();
 
             if (arrayFile != null) {    //successfully downloaded arrayFile
-                File temp=new File("res/ArrayFileInfo.txt");
+                File temp = new File("res/ArrayFileInfo.txt");
                 boolean res = arrayFile.renameTo(temp);
-                arrayFile=temp;
+                arrayFile = temp;
                 System.out.println("Replace status of old res/ArrayFileInfo.txt :" + res);
             } else {
                 JOptionPane.showMessageDialog(this, "Error downloading array file from internet. Please make sure you are connected to internet. Using the locally cached copy now.",
@@ -191,9 +190,9 @@ public class DatasetParametersPanel extends javax.swing.JPanel {
             File speciesFile = speciesDownloader.getOutputFile();
             if (speciesFile != null) // successfully downloaded the species file
             {
-                File temp=new File("res/species_all.txt");
+                File temp = new File("res/species_all.txt");
                 boolean res = speciesFile.renameTo(temp);
-                speciesFile=temp;
+                speciesFile = temp;
                 System.out.println("Replace status of old res/species_all.txt :" + res);
 
             } else {
@@ -205,6 +204,8 @@ public class DatasetParametersPanel extends javax.swing.JPanel {
             speciesList = parseSpeciesFile(speciesFile);
 //                System.out.println("delete status of species file is" + speciesFile.delete());
 
+
+            removeSpeciesWithoutLibraries(arrayDataList, speciesList);
 
             fillComboBoxes();
 
@@ -565,7 +566,6 @@ public class DatasetParametersPanel extends javax.swing.JPanel {
         return list;
     }
 
-
     /**
      * parses the species_all.txt downloaded from internet
      * @param arrayFile the species_all.txt file
@@ -623,5 +623,37 @@ public class DatasetParametersPanel extends javax.swing.JPanel {
         }
 
         return list;
+    }
+
+    /**
+     * Removes the species from the list of species parsed from the file species_all.txt,
+     * which dont have an entry in the ArrayFileInfo.txt file
+     * @param arrayDataList the list of ArrayData as parsed from ArrayFileInfo.txt
+     * @param speciesList the list of Species as parsed from species_all.txt
+     */
+    private void removeSpeciesWithoutLibraries(ArrayList<ArrayData> arrayDataList, ArrayList<Species> speciesList) {
+        ArrayList<Species> newSpeciesList = new ArrayList<Species>();
+
+        for (int i = 0; i < speciesList.size(); i++) {
+            boolean found = false;
+            String species = speciesList.get(i).code.toLowerCase();
+
+            for (int j = 0; j < arrayDataList.size(); j++) {
+                String sp = arrayDataList.get(j).species.toLowerCase();
+
+                if (sp.equals(species)) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found) {
+                newSpeciesList.add(speciesList.get(i));
+            }
+
+        }
+
+        newSpeciesList.add(new Species("other", "Other"));
+        this.speciesList = newSpeciesList;
     }
 }
